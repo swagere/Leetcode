@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class p_279_2 {
+	static int[] array;
+	
 	//普通递归 + 记忆化搜索：存储已计算过的值
 	 public static int numSquares(int n) {
 		 if (n == 0) {
 			 return n;
+		 }else if (array[n] != 0) {
+			 return array[n];
 		 }
 		 
 		 //如果n为平方数
@@ -17,6 +21,7 @@ public class p_279_2 {
 				 return 1;
 			 }
 		 }
+		 
 		 
 		 List<Integer> res = new ArrayList<Integer>();
 		 for (int i = 1; i <= Math.sqrt(n); i++) {
@@ -30,12 +35,16 @@ public class p_279_2 {
 				 min = i;
 			 }
 		 }
+		 
+		 array[n] = min;
+		 
 		 return min;
 	}
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
+		array = new int[n + 1];
 		System.out.println(numSquares(n));
 	}
 	
