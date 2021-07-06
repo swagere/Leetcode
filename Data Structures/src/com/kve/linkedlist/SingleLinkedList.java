@@ -4,7 +4,12 @@ package com.kve.linkedlist;
 public class SingleLinkedList {
 	private Node head = new Node(0, ""); //头节点 不可改变
 	
+	public SingleLinkedList(Node head) {
+		this.head = head;
+	}
 	
+	public SingleLinkedList() {}
+
 	//尾插法添加
 	public void add(Node node) {
 		Node temp = head; //辅助节点 辅助进行遍历
@@ -126,6 +131,11 @@ public class SingleLinkedList {
 			temp = temp.next;
 		}
 		
+	}
+
+	//获得头节点
+	public Node getHead() {
+		return head;
 	}
 }
 
