@@ -5,7 +5,7 @@ import java.util.Scanner;
 //¶ş·Ö²éÕÒ
 
 //target index left right mid
-public class binary_search {
+public class p_704_binary_search {
     public static int search(int[] nums, int target) {
     	int left = 0;
     	int right = nums.length;
