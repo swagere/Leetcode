@@ -19,7 +19,7 @@ public class p_1711_3 {
 	}
 	
 	public static int countPairs(int[] deliciousness) {
-		//2的次方
+		//初始化目标待比较数组：2的次方
 		List<Integer> aims = new ArrayList<>();
 		aims.add(1);
 		for (int i = 1; i < 22; i++) {
@@ -30,6 +30,8 @@ public class p_1711_3 {
 		int sum = 0;
 		int sum1 = 0;
 		int sum2 = 0;
+		
+		//初始化输入数组 提取每个值并记录数量
 		Map<Integer, Integer> map = new HashMap<>();
         for (int i : deliciousness) {
         	if (map.containsKey(i)) {
@@ -40,12 +42,12 @@ public class p_1711_3 {
         	}
         }
         
+        //依次比较
         Object[] set = map.keySet().toArray();
         for (int i = 0; i < set.length; i++) {
 			if (map.get(set[i]) > 1) {
     			if (isTwoTimes((int)set[i] * 2, aims)) {
     				sum = (sum + map.get(set[i]) * (map.get(set[i]) - 1) / 2) % mod;
-    				System.out.println(set[i]);
     				sum1 = sum1 + map.get(set[i]) * (map.get(set[i]) - 1) / 2;
     			}
     		}
@@ -59,8 +61,6 @@ public class p_1711_3 {
     		
         	
         }
-        System.out.println(sum1);
-        System.out.println(sum2);
         
         return sum;
     }

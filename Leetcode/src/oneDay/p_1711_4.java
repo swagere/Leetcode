@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class p_1711_4 {
 	public static int countPairs(int[] deliciousness) {
-		//2的次方
+		//初始化目标待比较数组：2的次方
 		List<Integer> aims = new ArrayList<>();
 		aims.add(1);
 		for (int i = 1; i < 22; i++) {
@@ -27,6 +27,8 @@ public class p_1711_4 {
 		long sum1 = 0;
 		long sum2 = 0;
 		Map<Integer, Long> map = new HashMap<>();
+		
+		//初始化输入数组 提取每个值并记录数量
         for (int i : deliciousness) {
         	if (map.containsKey(i)) {
         		map.put(i, map.get(i) + 1);
@@ -36,6 +38,7 @@ public class p_1711_4 {
         	}
         }
         
+      //依次比较
         for (Integer i : map.keySet()) {
 			for (int j = 0; j < aims.size(); j++) {
 				Integer res = aims.get(j) - i; //目标差
