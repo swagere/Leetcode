@@ -37,11 +37,7 @@ public class calculator {
 		//将数和运算符分开
 		for (int i = 0; i < str.length(); i++) {
 			char cur = str.charAt(i);
-			if (cur - '0' >= 0 && cur - '9' <= 0) {
-				//数字进栈
-				numStack.push(String.valueOf(cur));
-			}
-			else {
+			if (isOper(cur)) {
 				//如果是运算符
 				//如果栈为空 或 运算符优先级大于栈顶元素优先级 则直接进栈
 				if (operStack.isEmpty() || biggerthan(cur, operStack.getPop())) {
@@ -60,6 +56,16 @@ public class calculator {
 					
 				}
 			}
+			else {
+				//如果不是运算符 则扫描全部的数字 保存多位数
+				String num = "";
+				while (i < str.length() && !isOper(str.charAt(i))) {
+					num = num + str.charAt(i);
+					i++;
+				}
+				i--;
+				numStack.push(num);
+			}
 		}
 		
 		//计算 
@@ -76,8 +82,15 @@ public class calculator {
 		return numStack.pop();
 	}
 
+	private static boolean isOper(char cur) {
+		if (cur == '+' || cur == '-' || cur == '*' || cur == '/') {
+			return true;
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {
-		String str = "6+3*3-1";
+		String str = "6+3*3-100";
 		System.out.println(calculator(str));
 		
 
