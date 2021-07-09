@@ -1,6 +1,7 @@
 package com.kve.stack;
 
 //int char可以相互转化
+//用char直接存成int时，若是数字则要减去ASCII码（-48），如要存'8'，则需'8'-48
 
 public class calculator {
 	//单次计算 
