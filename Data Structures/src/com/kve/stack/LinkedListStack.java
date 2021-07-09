@@ -7,12 +7,12 @@ public class LinkedListStack {
 	private SNode head = new SNode(null);
 	
 	//pop
-	public int pop() {
+	public String pop() {
 		if (isEmpty()) {
 			throw new RuntimeException("链表为空");
 		}
 		
-		int i = head.next.data;
+		String i = head.next.data;
 		head.next = head.next.next;
 		
 		return i;
@@ -21,7 +21,7 @@ public class LinkedListStack {
 	
 	//push
 	//头插法
-	public void push(int i) {
+	public void push(String i) {
 		SNode newNode = new SNode(i);
 		newNode.next = head.next;
 		
@@ -42,13 +42,29 @@ public class LinkedListStack {
 			temp = temp.next;
 		}
 	}
+	
+	//getPop获得栈顶元素
+	public String getPop() {
+		if (isEmpty()) {
+			return null;
+		}
+		return head.next.data;
+	}
+
+	//是否大于1
+	public boolean GthanOne() {
+		if (head.next.next != null) {
+			return true;
+		}
+		return false;
+	}
 }
 
 class SNode {
-	Integer data;
+	String data;
 	SNode next;
 	
-	public SNode(Integer data) {
+	public SNode(String data) {
 		this.data = data;
 		this.next = null;
 	}

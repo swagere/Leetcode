@@ -12,9 +12,13 @@ public class ArrayStackDemo {
 		
 		
 		System.out.println(arrayStack.pop());
+		System.out.println(arrayStack.pop());
+		System.out.println(arrayStack.pop());
+		System.out.println(arrayStack.pop());
+		arrayStack.show();
 		System.out.println();
 		
-		arrayStack.push(4);
+//		arrayStack.push(4);
 		arrayStack.show();
 
 	}
