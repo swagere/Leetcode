@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+//r
 //map hashMap
 //判断是否为2的幂 用有限数组
 

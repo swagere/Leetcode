@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//r
 public class p_279_2 {
 	static int[] array;
 	

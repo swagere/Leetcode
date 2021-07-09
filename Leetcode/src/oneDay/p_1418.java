@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 //list
 //int[][]
 
+//r
+
 public class p_1418 {
 	public static List<List<String>> displayTable(List<List<String>> orders) {
         List<String> foots = new ArrayList<>();
