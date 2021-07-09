@@ -7,11 +7,14 @@ public class ArrayStackDemo {
 		arrayStack.push(1);
 		arrayStack.push(2);
 		arrayStack.push(3);
+		arrayStack.show();
+		System.out.println();
 		
 		
-		arrayStack.pop();
+		System.out.println(arrayStack.pop());
+		System.out.println();
+		
 		arrayStack.push(4);
-		
 		arrayStack.show();
 
 	}
