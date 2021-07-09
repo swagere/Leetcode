@@ -1,11 +1,11 @@
-package oneDay;
+package oneDay.leetcode;
 
 import java.util.HashMap;
 import java.util.Map;
 
 //map hashMap
 
-public class p_1711_2 {
+public class l_1711_2 {
 	public static boolean isTwoTimes(int i) {
 		boolean flag = false;
 		while (true) {

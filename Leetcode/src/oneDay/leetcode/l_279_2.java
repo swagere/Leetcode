@@ -1,11 +1,11 @@
-package oneDay;
+package oneDay.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 //r
-public class p_279_2 {
+public class l_279_2 {
 	static int[] array;
 	
 	//普通递归 + 记忆化搜索：存储已计算过的值  + min的使用

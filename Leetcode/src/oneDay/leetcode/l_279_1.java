@@ -1,10 +1,10 @@
-package oneDay;
+package oneDay.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class p_279_1 {
+public class l_279_1 {
 	//普通递归（类似斐波拉契数列）
 	 public static int numSquares(int n) {
 		 if (n == 0) {

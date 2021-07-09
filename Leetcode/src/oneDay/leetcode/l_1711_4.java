@@ -1,4 +1,4 @@
-package oneDay;
+package oneDay.leetcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  */
 
-public class p_1711_4 {
+public class l_1711_4 {
 	public static int countPairs(int[] deliciousness) {
 		//初始化目标待比较数组：2的次方
 		List<Integer> aims = new ArrayList<>();

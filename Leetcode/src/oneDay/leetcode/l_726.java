@@ -1,10 +1,10 @@
-package oneDay;
+package oneDay.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class p_726 {
+public class l_726 {
 	public static String countOfAtoms(String formula) {
         Stack stack = new Stack<>();
         List list = new ArrayList<>();

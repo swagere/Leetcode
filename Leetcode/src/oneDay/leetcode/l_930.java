@@ -1,8 +1,8 @@
-package oneDay;
+package oneDay.leetcode;
 
 //r
 //±©Á¦Ñ­»·
-public class p_930 {
+public class l_930 {
 	public static int numSubarraysWithSum(int[] nums, int goal) {
 		int count = 0;
 		

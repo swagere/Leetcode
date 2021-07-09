@@ -1,8 +1,8 @@
-package oneDay;
+package oneDay.leetcode;
 
 //int[]
 
-public class p_1711_1 {
+public class l_1711_1 {
 	public static boolean isTwoTimes(int i) {
 		boolean flag = false;
 		while (true) {

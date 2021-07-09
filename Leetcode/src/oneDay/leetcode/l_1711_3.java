@@ -1,4 +1,4 @@
-package oneDay;
+package oneDay.leetcode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 //map hashMap
 //判断是否为2的幂 用有限数组
 
-public class p_1711_3 {
+public class l_1711_3 {
 	public static boolean isTwoTimes(int i, List<Integer> aims) {
 		if (aims.contains(i)) {
 			return true;
