@@ -1,5 +1,6 @@
 package com.kve.stack;
 
+//中缀表达式解决
 //int char可以相互转化
 //用char直接存成int时，若是数字则要减去ASCII码（-48），如要存'8'，则需'8'-48
 
@@ -7,7 +8,7 @@ package com.kve.stack;
 //多位运算
 //()
 
-public class calculator {
+public class InfixCalculator {
 	//单次计算 
 	//输入:两个数和一个操作符
 	public static double calculatorSingle(String num2, String num1, String oper) {
