@@ -8,7 +8,7 @@ import java.util.Stack;
 public class SuffixCalculator {
 
 	public static void main(String[] args) {
-		String expresstion = "6+(3+16/4)*3+2";
+		String expresstion = "6+(3*(3-1)+16/4)*3+2";
 		
 		//先由普通的中缀表达式得出后缀表达式
 		List<String> suffixExpression = parseSuffixExpression(expresstion);
@@ -30,7 +30,6 @@ public class SuffixCalculator {
 			}
 			else {
 				//如果是操作符 则弹出两个数字运算
-				System.out.println(s);
 				double num1 = Double.valueOf(res.pop());
 				double num2 = Double.valueOf(res.pop());
 				double res1 = 0;
@@ -101,7 +100,7 @@ public class SuffixCalculator {
 							res.add(String.valueOf(oper.pop()));
 						}
 						
-						oper.push(c);
+						oper.push(c); //该操作符入栈
 					}
 				}
 			}
@@ -126,6 +125,8 @@ public class SuffixCalculator {
 	//获得符号优先级大小
 	private static int getValue(char c) {
 		switch (c) {
+		case '(':
+			return 0;
 		case '+':
 			return 1;
 		case '-':
