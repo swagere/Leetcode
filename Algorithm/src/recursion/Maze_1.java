@@ -3,7 +3,7 @@ package recursion;
 //迷宫问题
 //递归解决
 //非bf
-public class maze_1 {
+public class Maze_1 {
 
 	public static void main(String[] args) {
 		//初始化地图

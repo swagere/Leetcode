@@ -2,7 +2,7 @@ package recursion;
 
 //八皇后问题
 //递归解决
-public class queen {
+public class Queen {
 
 	//记录走过的步数
 	//将二维数组转化为一维数组

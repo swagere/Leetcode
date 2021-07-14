@@ -6,7 +6,7 @@ import java.util.List;
 //迷宫问题
 //只能找到最短距离
 //bfs bfs为while解决
-public class maze_2 {
+public class Maze_2 {
 
 	public static void main(String[] args) {
 		//初始化地图
