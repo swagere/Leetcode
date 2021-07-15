@@ -9,25 +9,25 @@ import java.util.Date;
 public class ShellSort {
 
 	public static void main(String[] args) {
-//		int[] nums = {1,0,4,3,-1,5};
-//		System.out.println(Arrays.toString(nums));
-//		
-//		shellSort2(nums);
-//		System.out.println(Arrays.toString(nums));
+		int[] nums = {1,0,4,3,-1,5};
+		System.out.println(Arrays.toString(nums));
+		
+		shellSort2(nums);
+		System.out.println(Arrays.toString(nums));
 
-		int[] nums = new int[80000];
-		for (int i = 0; i < 80000; i++) {
-			nums[i] = (int) (Math.random()*800000);
-		}
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date1 = new Date();
-		System.out.println(simpleDateFormat.format(date1));
-		
-		shellSort1(nums);
-		
-		Date date2 = new Date();
-		System.out.println(simpleDateFormat.format(date2));
+//		int[] nums = new int[80000];
+//		for (int i = 0; i < 80000; i++) {
+//			nums[i] = (int) (Math.random()*800000);
+//		}
+//		
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		Date date1 = new Date();
+//		System.out.println(simpleDateFormat.format(date1));
+//		
+//		shellSort1(nums);
+//		
+//		Date date2 = new Date();
+//		System.out.println(simpleDateFormat.format(date2));
 	}
 
 
