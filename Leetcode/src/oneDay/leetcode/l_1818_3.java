@@ -5,6 +5,7 @@ import java.util.Arrays;
 //超时
 //优化：二分查找
 //思路二：边求和边找相差最大的值，最后相减
+//r
 public class l_1818_3 {
 	static int mod = 1000000007;
 	

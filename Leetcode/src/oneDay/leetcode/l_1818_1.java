@@ -3,6 +3,7 @@ package oneDay.leetcode;
 import java.util.Arrays;
 
 //w
+//只有贪心，思路错误
 public class l_1818_1 {
 	public static int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
 		int len = nums1.length;

@@ -5,6 +5,7 @@ import java.util.Arrays;
 //超时
 //优化：二分查找
 //思路一：先找出和，再依次找出不为0的每个的替换值，比较得出差距最大的替换值
+//r
 public class l_1818_2 {
 	public static int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
 		int len = nums1.length;
