@@ -5,9 +5,9 @@ package search;
 public class BinarySearch {
 
 	public static void main(String[] args) {
-		int[] nums = {1,2,3,4,5,6,7,8};
+		int[] nums = {1,2,2,2,2,6,7,8};
 		
-		int res = binarySearch2(nums, 0, nums.length - 1, 1);
+		int res = binarySearch2(nums, 0, nums.length - 1, 2);
 		if (res == -1) {
 			System.out.println("没有找到该数");
 		}
