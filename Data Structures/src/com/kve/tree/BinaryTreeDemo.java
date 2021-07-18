@@ -18,9 +18,15 @@ public class BinaryTreeDemo {
 		
 //		binaryTree.preOrder();
 		
-		binaryTree.infixOrder();
+//		binaryTree.infixOrder();
 		
 //		binaryTree.postOrder();
+		
+		System.out.println(binaryTree.preOrderSearch(15));
+		
+//		System.out.println(binaryTree.infixOrderSearch(5));
+		
+//		System.out.println(binaryTree.postOrderSearch(5));
 	}
 
 }

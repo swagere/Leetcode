@@ -88,4 +88,74 @@ public class MyTreeNode {
 		
 		System.out.println(this);
 	}
+
+	
+	//前序遍历查找 根左右
+	public MyTreeNode preOrderSearch(int id) {
+		System.out.println(1);
+		if (this.id == id) {
+			return this;
+		}
+		
+		MyTreeNode res = null;
+		if (this.left != null) { 
+			res = this.left.preOrderSearch(id);
+		}
+		if (res != null) {
+			return res;
+		}
+		
+		if (this.right != null) {
+			res = this.right.preOrderSearch(id);
+		}
+		return res;
+	}
+	
+	//中序遍历查找 左根右
+	public MyTreeNode infixOrderSearch(int id) {
+		
+		MyTreeNode res = null;
+		if (this.left != null) { 
+			res = this.left.infixOrderSearch(id);
+		}
+		if (res != null) {
+			return res;
+		}
+		
+		System.out.println(2);
+		if (this.id == id) {
+			return this;
+		}
+		
+		if (this.right != null) {
+			res = this.right.infixOrderSearch(id);
+		}
+		return res;
+	}
+	
+	//后序遍历查找 左右根
+	public MyTreeNode postOrderSearch(int id) {
+		
+		MyTreeNode res = null;
+		if (this.left != null) { 
+			res = this.left.postOrderSearch(id);
+		}
+		if (res != null) {
+			return res;
+		}	
+		
+		
+		if (this.right != null) {
+			res = this.right.postOrderSearch(id);
+		}
+		if (res != null) {
+			return res;
+		}
+		
+		System.out.println(3); //计算比较次数 应该放在比较之前才准确 放在最前面可能只是判断了是否为空而没有比较
+		if (this.id == id) {
+			return this;
+		}
+		return res;
+	}
 }
