@@ -158,4 +158,139 @@ public class MyTreeNode {
 		}
 		return res;
 	}
+	
+	//删除节点1
+	//只能找到待删除节点的父节点 然后通过父节点的指针
+	//如果待删除节点是叶子节点 则直接删除该节点
+	//如果待删除节点不是叶子节点 则删除整个子树
+	//无返回值版
+	public void delNode1(int id) {
+		//先判断左节点 再判断右节点
+		//再循环左子树 再循环右子树
+		if (this.left != null && this.left.id == id) {
+			this.left = null;
+			return;
+		}
+		
+		if (this.right != null && this.right.id == id) {
+			this.right = null;
+			return;
+		}
+		
+		if (this.left != null) {
+			this.left.delNode1(id); // bug:如果左子树已删除 还是会循环让右子树删除
+		}
+		
+		if (this.right != null) {
+			this.right.delNode1(id);
+		}
+	}
+	
+	//删除节点2
+	//只能找到待删除节点的父节点 然后通过父节点的指针
+	//如果待删除节点是叶子节点 则直接删除该节点
+	//如果待删除节点不是叶子节点 则删除整个子树
+	//有返回值版
+	public MyTreeNode delNode2(int id) {
+		//先判断左节点 再判断右节点
+		//再循环左子树 再循环右子树
+		MyTreeNode res = null;
+		if (this.left != null && this.left.id == id) {
+			res = this.left;
+			this.left = null;
+			return res;
+		}
+		
+		if (this.right != null && this.right.id == id) {
+			res = this.right;
+			this.right = null;
+			return res;
+		}
+		
+		if (this.left != null) {
+			res = this.left.delNode2(id); // bug:如果左子树已删除 还是会循环让右子树删除
+		}
+		
+		if (res == null) {
+			if (this.right != null) {
+				res = this.right.delNode2(id);
+			}
+		}
+		return res;
+	}
+	
+	//删除节点2
+	//只能找到待删除节点的父节点 然后通过父节点的指针
+	//如果待删除节点是叶子节点 则直接删除该节点
+	//如果待删除节点不是叶子节点 
+	//若该节点只有一个子节点 则由改子节点直接代替
+	//若有两个子节点 则用左子节点代替原节点(其余先不管)
+	public MyTreeNode delNode3(int id) {
+		//先判断左节点 再判断右节点
+		//再循环左子树 再循环右子树
+		MyTreeNode res = null;
+		if (this.left != null && this.left.id == id) {
+			res = this.left;
+			delete(this, 0); //0为左 1为右
+			return res;
+		}
+		
+		if (this.right != null && this.right.id == id) {
+			res = this.right;
+			delete(this, 1);
+			return res;
+		}
+		
+		if (this.left != null) {
+			res = this.left.delNode2(id); // bug:如果左子树已删除 还是会循环让右子树删除
+		}
+		
+		if (res == null) {
+			if (this.right != null) {
+				res = this.right.delNode2(id);
+			}
+		}
+		return res;
+	}
+
+	private void delete(MyTreeNode node, int flag) {
+		MyTreeNode cur = null;
+		if (flag == 0) {
+			cur = node.left;
+			//判断是不是有两个子节点
+			if (cur.getLeft() != null && cur.getRight() != null) {
+				//若有两个子节点 则由左子节点替代当前节点
+				node.left = cur.getLeft();
+			}
+			else if (cur.getLeft() != null) {
+				node.left = cur.getLeft();
+			}
+			else if (cur.getRight() != null) {
+				node.left = cur.getRight();
+			}
+			else {
+				node.left = null;
+			}
+		}
+		else {
+			cur = node.right;
+			//判断是不是有两个子节点
+			if (cur.getLeft() != null && cur.getRight() != null) {
+				//若有两个子节点 则由左子节点替代当前节点
+				node.right = cur.getLeft();
+			}
+			else if (cur.getLeft() != null) {
+				node.right = cur.getLeft();
+			}
+			else if (cur.getRight() != null) {
+				node.right = cur.getRight();
+			}
+			else {
+				node.right = null;
+			}
+		}
+		
+		
+	}
+	
 }

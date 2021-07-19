@@ -16,17 +16,27 @@ public class BinaryTreeDemo {
 		node3.setLeft(node5);
 		node3.setRight(node4);
 		
-//		binaryTree.preOrder();
+		binaryTree.preOrder();
+		System.out.println();
 		
 //		binaryTree.infixOrder();
 		
 //		binaryTree.postOrder();
 		
-		System.out.println(binaryTree.preOrderSearch(15));
+//		System.out.println(binaryTree.preOrderSearch(15));
 		
 //		System.out.println(binaryTree.infixOrderSearch(5));
 		
 //		System.out.println(binaryTree.postOrderSearch(5));
+		
+//		binaryTree.delNode1(5);
+		
+//		binaryTree.delNode2(3);
+		
+		binaryTree.delNode3(2);
+		
+		System.out.println();
+		binaryTree.preOrder();
 	}
 
 }

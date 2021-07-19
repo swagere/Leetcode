@@ -64,4 +64,71 @@ public class BinaryTree {
 		
 		return null;
 	}
+	
+	//删除
+	//先判断树是否为空
+	//再判断根节点
+	public void delNode1(int id) {
+		if (this.root != null) {
+			if (root.getId() == id) {
+				root = null;
+			}
+			else {
+				this.root.delNode1(id);
+			}
+		}
+		else {
+			System.out.println("该树为空 无法删除节点");
+		}
+	}
+	
+	public void delNode2(int id) {
+		if (this.root != null) {
+			if (root.getId() == id) {
+				this.root = null;
+			}
+			else {
+				MyTreeNode res = this.root.delNode2(id);
+				if (res == null) {
+					System.out.println("没有找到该节点 删除失败");
+				}
+				else {
+					res.preOrder();
+				}
+			}
+		}
+		else {
+			System.out.println("该树为空 无法删除节点");
+		}
+	}
+	
+	public void delNode3(int id) {
+		if (this.root != null) {
+			if (root.getId() == id) {
+				//判断是否有两个子节点
+				if (this.root.getLeft() != null && this.root.getRight() != null) {
+					//若有两个子节点 则由左子节点替代当前节点
+					this.root = this.root.getLeft();
+				}
+				else if (this.root.getLeft() != null) {
+					this.root = this.root.getLeft();
+				}
+				else if (this.root.getRight() != null) {
+					this.root = this.root.getRight();
+				}
+			}
+			else {
+				MyTreeNode res = this.root.delNode3(id);
+				if (res == null) {
+					System.out.println("没有找到该节点 删除失败");
+				}
+				else {
+					System.out.println(res);
+				}
+			}
+		}
+		else {
+			System.out.println("该树为空 无法删除节点");
+		}
+	}
 }
