@@ -39,7 +39,7 @@ public class HeapSort {
 		int temp = nums[index]; //要排的位置
 		
 		//先找左子节点
-		for (int i = 2 * index + 1; i < length; i = 2 * i + 1) { // 下一轮继续找下一个结点的左子节点
+		for (int i = 2 * index + 1; i < length; i = 2 * index + 1) { // 下一轮继续找下一个结点的左子节点
 			//与右子节点比较 保留较大的数
 			if (i + 1 < length && nums[i] < nums[i + 1]) { //检测i+1的大小
 				i += 1;
