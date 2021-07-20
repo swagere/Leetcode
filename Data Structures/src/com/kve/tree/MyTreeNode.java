@@ -6,6 +6,10 @@ public class MyTreeNode {
 	private MyTreeNode left = null;
 	private MyTreeNode right = null;
 	
+	//线索化二叉树新增字段
+	private int leftType = 0; //0为子树/子节点 1为前驱节点
+	private int rightType = 0; //0为子树/子节点 1为后继节点
+	
 	public MyTreeNode(int id, String name) {
 		this.id = id;
 		this.name = name;
@@ -41,6 +45,22 @@ public class MyTreeNode {
 
 	public void setRight(MyTreeNode right) {
 		this.right = right;
+	}
+	
+	public int getLeftType() {
+		return leftType;
+	}
+
+	public void setLeftType(int leftType) {
+		this.leftType = leftType;
+	}
+
+	public int getRightType() {
+		return rightType;
+	}
+
+	public void setRightType(int rightType) {
+		this.rightType = rightType;
 	}
 	
 	@Override
@@ -292,5 +312,4 @@ public class MyTreeNode {
 		
 		
 	}
-	
 }
