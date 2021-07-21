@@ -45,6 +45,9 @@ public class HuffmanTree {
 		if (root != null) {
 			root.preOrder();
 		}
+		else {
+			System.out.println("null，没有数据");
+		}
 	}
 
 }
