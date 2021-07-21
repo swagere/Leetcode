@@ -1,4 +1,4 @@
-package com.kve.tree;
+package com.kve.binarytree;
 
 public class ThreadedBinaryTree{
 	private MyTreeNode root;

@@ -1,4 +1,4 @@
-package com.kve.tree;
+package com.kve.binarytree;
 
 //顺序存储二叉树:即用数组存储二叉树
 public class ArrayBinaryTree {
