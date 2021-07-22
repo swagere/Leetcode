@@ -9,18 +9,106 @@ import java.util.Map.Entry;
 
 public class HuffmanCode {
 	public static void main(String[] args) {
-		String str = "I like like like java do you like a java";
+		String str = "i like like like java do you like a java"; //样例
+//		String str = "do you love me?"; // 不足八位 即为正
+//		String str = "how do you d"; // 最后八位为负
+		System.out.println("消息：" + str);
 		
 		//1. 将原字符串转为byte[]数组（ASCII码）
 		byte[] bytes = str.getBytes();
 		
+		//压缩
 		byte[] huffmanBytes = HuffmanZip(bytes);
 		
+		//输出压缩结果
+		System.out.print("压缩：");
 		for (int i = 0; i < huffmanBytes.length; i++) {
 			System.out.print(huffmanBytes[i] + " ");
 		}
+		System.out.println();
+		
+		
+		
+		//解压
+		byte[] decodeBytes = decode(huffmanBytes);
+		System.out.println("解码：" + new String(decodeBytes));
 	}
 	
+	/**
+	 * 数据解压
+	 */
+	public static byte[] decode(byte[] huffmanBytes) {
+		//解压
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < huffmanBytes.length; i++) {
+			boolean flag = i == huffmanBytes.length - 1 ? true:false;
+			String codes = byteToBitString(huffmanBytes[i], flag);
+			stringBuilder.append(codes);
+		}
+		System.out.println("解压：" + stringBuilder);
+		
+		
+		//解码
+		
+		//调换map的value和key
+		Map<String, Byte> huffmanDecodes = new HashMap<>();
+		for (Entry<Byte, String> item : HuffmanCodes.entrySet()) {
+			huffmanDecodes.put(item.getValue(), item.getKey());
+		}
+		
+		
+		String key = "";
+		List<Byte> list = new ArrayList<>();
+		for (int i = 0; i < stringBuilder.length(); i++) {
+			key += stringBuilder.charAt(i);
+			Byte b = huffmanDecodes.get(key);
+			if (b != null) {
+				list.add(b);
+				key = "";
+			}
+		}
+		
+		byte[] bytes = new byte[list.size()];
+		for (int i = 0; i <list.size(); i++) {
+			bytes[i] = list.get(i);
+		}
+		return bytes;
+	}
+	
+	//返回补码 原码转补码
+	public static String byteToBitString(byte b, boolean flag) {
+		//返回二进制对应的补码 Integer.toBinaryString()
+		//但是是int类型 要转成byte
+		//非最后一个：截断八位 或者 |=补齐八位
+		//最后一个：单独判断 如果为正则补齐位数 如果为负则截断八位
+		if (flag == false || (flag == true && b < 0)) {
+			//如果不是最后一位 或者是最后一位且为负
+			int temp = b;
+			temp |= 256; //补齐八位
+			String code = Integer.toBinaryString(temp);
+			code = code.substring(code.length() - 8); //截断八位
+			return code;
+		}
+		else {
+			//如果是最后一位且为正 按照位数补齐
+			String code = Integer.toBinaryString(b);
+			while (code.length() < lastIndexLength) {
+				code = "0" + code;
+			}
+			
+			return code;
+		}
+	}
+	
+	
+	
+	
+	
+	
+		
+	/**
+	 * 数据压缩
+	 */
 	public static byte[] HuffmanZip(byte[] bytes) {
 		//获得bytes数组对应的nodes节点集合
 		List<Node> nodes = getNodes(bytes);
@@ -35,6 +123,7 @@ public class HuffmanCode {
 		//6. 根据编码的map集合 对原bytes数组进行编码
 		//1010100010111111110010001011111111001000101111111100100101001101110001110000011011101000111100101000101111111100110001001010011011100
 		String huffmanCodeString = getCodeString(bytes, huffmanCodes);
+		System.out.println("编码：" + huffmanCodeString);
 		
 		//7. 压缩获得补码对应的原码转换的十进制数组
 		byte[] huffmanCodeBytes = zip(huffmanCodeString);
@@ -42,7 +131,7 @@ public class HuffmanCode {
 		return huffmanCodeBytes;
 	}
 
-
+	//获得树的节点
 	private static List<Node> getNodes(byte[] bytes) {
 		//2. 获得原字符串对应的Map（即每个字符出现的次数）
 		Map<Byte, Integer> map = new HashMap<>();
@@ -133,6 +222,8 @@ public class HuffmanCode {
 		return s.toString();
 	}
 	
+	static int lastIndexLength = 8;
+	
 	//压缩 
 	//补码转原码
 	private static byte[] zip(String huffmanCodeString) {
@@ -145,6 +236,7 @@ public class HuffmanCode {
 			String str = "";
 			if (i + 8 > huffmanCodeString.length()) {
 				str = huffmanCodeString.substring(i); //默认是从i到最后
+				lastIndexLength = str.length();
 			}
 			else {
 				str = huffmanCodeString.substring(i, i + 8); //i到i+7 左闭右开区间
