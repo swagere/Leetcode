@@ -38,11 +38,11 @@ public class HuffmanCode {
 //		byte[] decodeBytes = decode(huffmanBytes);
 //		System.out.println("解码：" + new String(decodeBytes));
 		
-//		//-- 压缩文件--
-//		huffmanZipFile("D://2.doc", "D://nihao.zip");
-//		
+		//-- 压缩文件--
+		huffmanZipFile("D://hei.mp4", "D://nihao.zip");
+		
 		//解压文件
-		unzipFile("D://nihao.zip", "D://3.doc");
+		unzipFile("D://nihao.zip", "D://3.mp4");
 	}
 	
 	/**
