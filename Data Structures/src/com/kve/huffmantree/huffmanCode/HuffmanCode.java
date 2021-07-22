@@ -1,5 +1,10 @@
 package com.kve.huffmantree.huffmanCode;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,31 +14,125 @@ import java.util.Map.Entry;
 
 public class HuffmanCode {
 	public static void main(String[] args) {
-		String str = "i like like like java do you like a java"; //样例
-//		String str = "do you love me?"; // 不足八位 即为正
-//		String str = "how do you d"; // 最后八位为负
-		System.out.println("消息：" + str);
+		//--压缩字符串--
+//		String str = "i like like like java do you like a java"; //样例
+////		String str = "do you love me?"; // 不足八位 即为正
+////		String str = "how do you d"; // 最后八位为负
+//		System.out.println("消息：" + str);
+//		
+//		//1. 将原字符串转为byte[]数组（ASCII码）
+//		byte[] bytes = str.getBytes();
+//		
+//		//压缩
+//		byte[] huffmanBytes = huffmanZip(bytes);
+//		
+//		//输出压缩结果
+//		System.out.print("压缩：");
+//		for (int i = 0; i < huffmanBytes.length; i++) {
+//			System.out.print(huffmanBytes[i] + " ");
+//		}
+//		System.out.println();
+//		
+//		
+//		//解压
+//		byte[] decodeBytes = decode(huffmanBytes);
+//		System.out.println("解码：" + new String(decodeBytes));
 		
-		//1. 将原字符串转为byte[]数组（ASCII码）
-		byte[] bytes = str.getBytes();
-		
-		//压缩
-		byte[] huffmanBytes = HuffmanZip(bytes);
-		
-		//输出压缩结果
-		System.out.print("压缩：");
-		for (int i = 0; i < huffmanBytes.length; i++) {
-			System.out.print(huffmanBytes[i] + " ");
-		}
-		System.out.println();
-		
-		
-		
-		//解压
-		byte[] decodeBytes = decode(huffmanBytes);
-		System.out.println("解码：" + new String(decodeBytes));
+//		//-- 压缩文件--
+//		huffmanZipFile("D://2.doc", "D://nihao.zip");
+//		
+		//解压文件
+		unzipFile("D://nihao.zip", "D://3.doc");
 	}
 	
+	/**
+	 * 文件压缩
+	 */
+	private static void huffmanZipFile(String srcFile, String dstFile) {
+		// IO流
+		//创建文件输入流
+		FileInputStream is = null;
+
+		//创建文件输出流
+		FileOutputStream os = null;
+		ObjectOutputStream oss = null;
+		
+		try {
+			is = new FileInputStream(srcFile);
+			
+			byte[] bytes = new byte[is.available()]; // 根据文件大小创建数组
+			
+			is.read(bytes); //将文件读到bytes中
+			
+			os = new FileOutputStream(dstFile);
+			
+			oss = new ObjectOutputStream(os);
+			
+			oss.writeObject(huffmanZip(bytes));
+			
+			oss.writeObject(HuffmanCodes);
+			
+			oss.writeObject(LastIndexLength);
+		
+		}catch (Exception e){
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				is.close();
+				os.close();
+				oss.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
+	 * 文件解压
+	 */
+	public static void unzipFile(String zipFile, String dstFile) {
+		FileInputStream is = null;
+		ObjectInputStream ois = null;
+		FileOutputStream os = null;
+		
+		try {
+			is = new FileInputStream(zipFile);
+			
+			ois = new ObjectInputStream(is);
+			
+			byte[] huffmanBytes = (byte[])ois.readObject();
+			
+			Map<Byte, String> huffmanCodes = (Map<Byte, String>)ois.readObject();
+			
+			int lastIndexLength = (int)ois.readObject();
+			
+			HuffmanCode.HuffmanCodes = huffmanCodes;
+			HuffmanCode.LastIndexLength = lastIndexLength;
+			byte[] decodeBytes = decode(huffmanBytes);
+			
+			os = new FileOutputStream(dstFile);
+			
+			os.write(decodeBytes);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				is.close();
+				ois.close();
+				os.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+
 	/**
 	 * 数据解压
 	 */
@@ -92,7 +191,7 @@ public class HuffmanCode {
 		else {
 			//如果是最后一位且为正 按照位数补齐
 			String code = Integer.toBinaryString(b);
-			while (code.length() < lastIndexLength) {
+			while (code.length() < LastIndexLength) {
 				code = "0" + code;
 			}
 			
@@ -103,13 +202,10 @@ public class HuffmanCode {
 	
 	
 	
-	
-	
-		
 	/**
 	 * 数据压缩
 	 */
-	public static byte[] HuffmanZip(byte[] bytes) {
+	public static byte[] huffmanZip(byte[] bytes) {
 		//获得bytes数组对应的nodes节点集合
 		List<Node> nodes = getNodes(bytes);
 		
@@ -222,7 +318,7 @@ public class HuffmanCode {
 		return s.toString();
 	}
 	
-	static int lastIndexLength = 8;
+	static int LastIndexLength = 8;
 	
 	//压缩 
 	//补码转原码
@@ -236,7 +332,7 @@ public class HuffmanCode {
 			String str = "";
 			if (i + 8 > huffmanCodeString.length()) {
 				str = huffmanCodeString.substring(i); //默认是从i到最后
-				lastIndexLength = str.length();
+				LastIndexLength = str.length();
 			}
 			else {
 				str = huffmanCodeString.substring(i, i + 8); //i到i+7 左闭右开区间
