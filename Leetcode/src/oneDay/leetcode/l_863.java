@@ -1,134 +1,94 @@
 package oneDay.leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-//w
+//r
+//用map保存父节点 从三个方向深搜（先序遍历）
 public class l_863 {
 	static TreeNode root = null;
-	static List<Integer> res = new ArrayList<>();
+	static Map<TreeNode, TreeNode> map = new HashMap<>();
+	static List<Integer> list = new ArrayList<Integer>();
 	
 	public static List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-		//1. 父节点以上距离为k的点
-		int len = getLengthFromRoot(root, target);
-		
-		//计算父节点到目标节点的距离
-		if (len == -1) {
-			System.out.println("没找到");
+		if (k == 0) {
+			list.add(target.val);
+			return list;
 		}
-		else {
-			System.out.println("len:" + len);
-		}
+		//记录父节点的值
+		preOrderAndSetParent(root, null);
 		
-		//如果len大于k，即从根节点从下找len-k，并检验再过k个节点能否找到目标节点
-		if (len >= k) {
-			searchChild1(len - k, 0, root);
-		}
-		else {
-			//如果小于k，则从根节点往下找k-len个，并检验再过k
-//			searchChild(len - k, 0, root);
-		}
+//		System.out.println(map);
 		
+		//以目标节点为根节点 进行三个方向的循环寻找 即左右上
+		int[] step = new int[500];
+		search(k, 0, target, step);
 		
-		//2. 子结点中距离为k的点
-		searchChild(k, 0, target);
-		
-		res.remove(Integer.valueOf(target.val));
-		
-		return res;
+		return list.stream().distinct().filter(x->!x.equals(Integer.valueOf(target.val))).collect(Collectors.toList());
 		
     }
 	
-	private static int getLengthFromRoot(TreeNode root, TreeNode target) {
-		int len = getLengthFromRoot(root, target, 0);
-		return len;
-	}
 	
-	private static int getLengthFromRoot(TreeNode node, TreeNode target, int cur) {
-		int res = -1;
-		if (node.val == target.val) {
-			return cur;
+	//从目标节点搜寻路径为k的点
+	public static void search(int k, int cur, TreeNode node, int[] step) {
+		System.out.println(node.val);
+		if (step[node.val] > 0) {
+			return;
 		}
 		
-		if (node.left != null) {
-			res =  getLengthFromRoot(node.left, target, cur + 1);
-		}
+		int[] steps = Arrays.copyOf(step, 500);
+		steps[node.val] += 1;
 		
-		if (res != -1) {
-			return res;
-		}
-		
-		if (node.right != null) {
-			res =  getLengthFromRoot(node.right, target, cur + 1);
-		}
-		
-		return res;
-	}
-	
-
-	//从目标节点向下搜寻路径为k的点
-	public static void searchChild(int k, int cur, TreeNode node) {
 		if (cur == k) {
-			res.add(node.val);
+			list.add(node.val);
 			return;
 		}
 		
 		if (node.left != null) {
-			searchChild(k, cur + 1, node.left);
+			search(k, cur + 1, node.left, steps);
 		}
 		
 		if (node.right != null) {
-			searchChild(k, cur + 1, node.right);
+			search(k, cur + 1, node.right, steps);
+		}
+		
+		if(map.get(node) != null) {
+			search(k, cur + 1, map.get(node), steps);
 		}
 	}
 	
-	//从根节点向下搜索路径为len-k的值，且验证
-	public static void searchChild1(int k, int cur, TreeNode node) {
-		if (cur == k) {
-			//验证是否再经过往下的k次就可搜索到目标节点
-			if (checkK(k, 0, node) == 1) {
-				res.add(node.val);
-				return;
-			}
+	//前序遍历
+	private static void preOrderAndSetParent(TreeNode node, TreeNode pre) {
+		//记录pre的父节点
+		if (pre != null) {
+			map.put(node, pre);
+		}
+		else {
+			map.put(node, null);
 		}
 		
 		if (node.left != null) {
-			searchChild(k, cur + 1, node.left);
+			pre = node;
+			preOrderAndSetParent(node.left, pre);
 		}
 		
 		if (node.right != null) {
-			searchChild(k, cur + 1, node.right);
+			pre = node;
+			preOrderAndSetParent(node.right, pre);
 		}
+		
 	}
 	
-	public static int checkK(int k, int cur, TreeNode node) {
-		if (cur == k) {
-			return 1;
-		}
-		
-		int res = -1;
-		
-		if (node.left != null) {
-			res = checkK(k, cur + 1, node.left);
-		}
-		
-		if (res == 1) {
-			return 1;
-		}
-		
-		if (node.right != null) {
-			res = checkK(k, cur + 1, node.right);
-		}
-		
-		return res;
-	}
-
 	//--辅助方法--
 	public static void main(String[] args) {
-//		Integer[] nums = {3,5,1,6,2,0,8,null,null,7,4};
-		Integer[] nums = {5,0,4,2,1,null,null,null,null,3,null};
+		Integer[] nums = {3,5,1,6,2,0,8,null,null,7,4};
+//		Integer[] nums = {0,1,null,null,2,null,3,null,4};
 		int target_val = 3;
-		int k = 3;
+		int k = 0;
 		
 		TreeNode root = create(nums);
 		
@@ -234,7 +194,7 @@ class TreeNode {
 	
 	@Override
 	public String toString() {
-		return "[val=" + val + "] => ";
+		return "[val=" + val + "]";
 	}
 	
 }
