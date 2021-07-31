@@ -50,6 +50,7 @@ public class Graph {
 		}
 	}
 
+	//递归
 	public void dfs(int index) {
 		//先输出自己 标记自己已经被访问
 		System.out.print(vertexList.get(index) + " ");
@@ -97,6 +98,7 @@ public class Graph {
 		}
 	}
 	
+	//非递归
 	public void bfs(int index, LinkedList<Integer> queue) {
 		System.out.print(vertexList.get(index) + " ");
 		isVisited[index] = 1;
