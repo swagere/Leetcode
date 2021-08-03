@@ -17,7 +17,7 @@ public class KMP {
 		//先得出next串 部分匹配表
 		int[] next = getNext(s2);
 		
-//		System.out.println(Arrays.toString(next));
+		System.out.println(Arrays.toString(next));
 		//再由next串计算出结果
 		int i = 0;
 		int j = 0;
