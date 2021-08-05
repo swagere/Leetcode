@@ -38,7 +38,8 @@ public class l_802_2 {
 				color[index] = 1;
 				return false;
 			}
-		}		
+		}	
+		//必须到最后没有可能成环是才赋值为2
 		color[index] = 2;
 		return true;
 	}
