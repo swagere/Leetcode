@@ -64,7 +64,8 @@ public class Graph {
 		while (start != -1){
 			if (isVisited[start] == 0) {
 				dfs(start);
-				break;
+//				break; // 此处没有break
+				
 			}
 			
 			
