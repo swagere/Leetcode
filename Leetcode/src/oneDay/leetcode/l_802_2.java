@@ -5,7 +5,6 @@ import java.util.List;
 
 //dfs
 //三色法
-//bfs和dfs均可用三色法
 public class l_802_2 {
 	public static List<Integer> eventualSafeNodes(int[][] graph) {
 		int vertexNum = graph.length;
