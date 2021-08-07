@@ -1,44 +1,50 @@
 package oneDay.leetcode;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
+//r
+//自己改写
+//广搜：一层一层往下走
+//走过的路径用压缩数组表示
+//增加数组保存mask状态 相同的mask状态则不循环遍历
 public class l_847_2 {
 	public static int shortestPathLength(int[][] graph) {
-		int n = graph.length;
-
-        // 1.初始化队列及标记数组，存入起点
-        Queue<int[]> queue = new LinkedList<int[]>(); // 三个属性分别为 idx, mask, dist
-        boolean[][] vis = new boolean[n][1 << n]; // 节点编号及当前状态
-        for (int i = 0; i < n; i++) {
-            queue.offer(new int[]{i, 1 << i, 0}); // 存入起点，起始距离0，标记
-            vis[i][1 << i] = true;
-        }
-
-        // 开始搜索
-        while (!queue.isEmpty()) {
-            int[] tuple = queue.poll(); // 弹出队头元素
-            int idx = tuple[0], mask = tuple[1], dist = tuple[2];
-
-            // 找到答案，返回结果
-            if (mask == (1 << n) - 1) return dist;
-            
-            // 扩展
-            for (int x : graph[idx]) {
-                int next_mask = mask | (1 << x);
-                if (!vis[x][next_mask]) {
-                    queue.offer(new int[]{x, next_mask, dist + 1});
-                    vis[x][next_mask] = true;
-                }
-            }
-        }
-        return 0;
+		int n = graph.length; //顶点个数
+		LinkedList<int[]> queue = new LinkedList<>(); //三元组标识一个节点：节点编号index 走过的路径(int)mask 走过的距离dist
+		boolean[][] vis = new boolean[n][1 << n];
+		
+		//多源广搜
+		for (int i = 0; i < graph.length; i++) {
+			queue.add(new int[] {i, 1 << i, 0});
+			vis[i][1 << i] = true;
+		}
+		
+		while (queue.size() > 0) {
+			int[] temp = queue.removeFirst();
+			int step = temp[2];
+			int index = temp[0];
+			for (int i = 0; i < graph[index].length; i++) {
+				int newMask = temp[1] | (1 << graph[index][i]);
+				if (!vis[graph[index][i]][newMask]) {
+					queue.add(new int[] {graph[index][i], newMask, step + 1});
+					vis[graph[index][i]][newMask] = true;
+					//判断是否已经遍历全部节点
+					if (newMask == (1 << n) - 1) {
+						return step + 1;
+					}
+				}
+				
+			}
+		}
+		
+		return 0;
 	}
 
 	public static void main(String[] args) {
 		int[][] graph = {
-				{1,2,3},{0},{0},{0}	
-//				{1},{0,2,4},{1,3,4},{2},{1,2,}
+//				{1,2,3},{0},{0},{0}	
+				{1},{0,2,4},{1,3,4},{2},{1,2,}
+//				{}
 		};
 
 		System.out.println(shortestPathLength(graph));
