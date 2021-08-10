@@ -1,33 +1,25 @@
 package oneDay.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 //r
+//优先队列+有序
 public class l_313_2 {
 	public static int nthSuperUglyNumber(int n, int[] primes) {
 		if (n == 1) {
 			return 1;
 		}
 		
-		List<Integer> res = new ArrayList<>();
-		res.add(1);
-		TreeSet<Integer> queue = new TreeSet<>();
-		int cur = 1;
+		TreeSet<Long> queue = new TreeSet<>();
+		long cur = 1L;
 		while (n > 1) {
 			for (int i = 0; i <primes.length; i++) {
 				queue.add(cur * primes[i]);
 			}
-//			do {
 			cur = queue.pollFirst();
-//			}
-//			while (res.contains(cur));
-			res.add(cur);
 			n--;
 		}
-		return cur;
+		return (int) cur;
     }
 
 	public static void main(String[] args) {
