@@ -2,16 +2,19 @@ package offer;
 
 import java.util.Stack;
 
+//r
+//每次取数据都拿出栈底元素 另一个栈用来暂时存放
 public class o_09_1 {
 
 }
 
 class CQueue {
-	Stack<Integer> queue1 = new Stack<Integer>();
-    Stack<Integer> queue2 = new Stack<Integer>();
+	Stack<Integer> queue1;
+    Stack<Integer> queue2;
 
     public CQueue() {
-    	
+    	queue1 = new Stack<Integer>();
+        queue2 = new Stack<Integer>();
     }
     
     public void appendTail(int value) {
