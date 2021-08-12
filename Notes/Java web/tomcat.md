@@ -1,0 +1,102 @@
+### 1. 目录介绍
+
+- bin：存放tomcat服务器的可执行程序
+- conf：存放tomcat服务器的配置文件
+- lib：存放tomcat服务器的jar包
+- logs：存放tomcat服务器运行时输出的日志信息
+- temp：存放tomcat服务器运行时产生的临时数据
+- webapps：存放部署的web工程
+- work：存放tomcat运行时jsp翻译为servlet的源码和session钝化的目录
+
+
+
+### 2. 启动tomcat服务器
+
+启动bin目录下的startup.bat文件
+
+- 双击
+- 命令行：catelina run
+
+
+
+**访问项目：**
+
+- http://localhost:8080
+- http://127.0.0.1:8080
+- http://真实ip:8080
+
+访问到webapps目录
+
+
+
+**配置环境：**
+
+- 配置系统变量：{ JAVA_HOME : jdk安装目录 }
+
+
+
+### 3. 关闭tomcat服务器
+
+启动bin目录下的shutdown.bat文件
+
+
+
+### 4. 修改tomcat端口
+
+默认端口为8080
+
+conf下server.xml文件中修改 port属性
+
+
+
+http协议默认的端口号为80
+
+
+
+### 5. web工程部署到tomcat服务器
+
+- 拷贝web工程目录，6.放到webapps目录下
+
+- 添加配置文件：在conf/catalina/localhost添加xml配置文件
+
+  ```xml
+  <Context path="xxx" docBase=""/>
+  ```
+
+  - Context 工程上下文
+  - path 工程访问路径
+  - docBase 工程目录的位置
+
+
+
+### 6. 默认访问的工程和资源
+
+没有工程名时，默认访问的工程为root工程
+
+没有资源名时，默认访问index.html页面
+
+
+
+### 7. IDEA整合tomcat
+
+file->settings->build...->Application Servers
+
+
+
+### 8. 动态web工程目录
+
+- src：java源代码
+- web：web工程的资源文件，如html页面，css文件，js文件等
+  - WEB-INF：受服务器保护的目录，浏览器无法直接访问里面的内容
+    - web.xml：整个web工程的配置部署描述文件，如servlet程序 filter过滤器 listener监听器 session超时等
+    - lib：第三方jar包 需自己配置导入
+
+
+
+### 9. 给tomcat中web工程添加第三方jar包
+
+1. 单独添加
+
+   <img src="C:\Users\12505\AppData\Roaming\Typora\typora-user-images\image-20210812135936321.png" alt="image-20210812135936321" style="zoom: 50%;" />  
+
+2. 创建类库，将所有添加进去
