@@ -55,7 +55,7 @@ http协议默认的端口号为80
 
 ### 5. web工程部署到tomcat服务器
 
-- 拷贝web工程目录，6.放到webapps目录下
+- 拷贝web工程目录，放到webapps目录下
 
 - 添加配置文件：在conf/catalina/localhost添加xml配置文件
 
