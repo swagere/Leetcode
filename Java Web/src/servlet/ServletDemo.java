@@ -35,6 +35,8 @@ public class ServletDemo implements Servlet{
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
+		System.out.println(config.getInitParameter("username"));
+		System.out.println(config.getInitParameterNames());
 		System.out.println("init");
 		
 	}

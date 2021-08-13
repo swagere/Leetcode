@@ -1,4 +1,4 @@
-三大组件：
+**三大组件：**
 
 - servlet
 - filter
@@ -61,3 +61,79 @@
 - 编写类 **继承**HttpServlet类
 - 重写doGet与doPost方法
 - web.xml中添加配置
+
+
+
+### 5. servlet类的继承体系
+
+#### 5.1 javax.servlet.Interface.Servlet
+
+#### 5.2 javax.servlet.Class.GenericServlet
+
+**实现类**
+
+实现了有关ServletConfig的内容（一般用于初始化时获取信息
+
+
+
+**ServletConfig**
+
+- 作用：
+
+  - 是GenericServlet的实例化成员变量
+  - 即在web.xml中配置的，保存在ServletConfig对象中
+
+- 实例化成员变量：
+  - servletName：servlet别名
+
+  - init-param：读取web.xml中设置的init-param初始化参数，键值对形式
+
+    ```xml
+    <!--web.xml<servlet>中设置的初始化参数-->
+    <servlet>
+        <init-param>
+    		<param-name>username</param-name>
+    		<param-value>root</param-value>
+        </init-param>
+    </servlet>
+    ```
+
+  - **servletContext**
+
+    - 作用：
+
+      - 一个接口，表示servlet上下文对象
+      - 一个工程/模块只有一个servletContext实例，在工程启动时创建，工程停止时销毁
+      - servletContext是一个域对象（即可以像map一样存取数据的对象，作用范围为整个实例
+
+    - 实例化成员变量：
+
+      - init-param：web.xml中配置的context-param上下文参数（属于整个web工程
+
+        ```xml
+        <!--web.xml中配置的上下文参数-->
+        <context-param>
+          	<param-name>name</param-name>
+          	<param-value>hello</param-value>
+        </context-param>
+        ```
+
+      - contextPath：当前工程路径，如/Java_Web
+
+      - realPath：工程配置的绝对路径，即工程在tomcat配置文件里面部署的路径
+
+        > 采用 web工程部署到tomcat服务器的第二种方式，映射到工程文件目录：即编译器拷贝工程，java文件被翻译为字节码文件
+
+      - setAttribute/getAttrobute：实现像map一样存取数据
+
+> 注：servletConfig对象在genericServlet的init(有参方法)中会被初始化，所以在继承时，如果重写了有参的init要先调用父类的init(有参方法)，或者直接重写无参的init()方法
+
+
+
+#### 5.3 javax.servlet.http.Class.HttpServlet
+
+ **继承类**
+
+- 实现了service方法，实现了请求的分发处理，将对应请求分发到doGet/doPost方法中
+  - doGet/doPost方法：只实现异常处理，即处理协议即版本的异常
+
