@@ -122,7 +122,7 @@
 
       - realPath：工程配置的绝对路径，即工程在tomcat配置文件里面部署的路径
 
-        > 采用 web工程部署到tomcat服务器的第二种方式，映射到工程文件目录：即编译器拷贝工程，java文件被翻译为字节码文件
+        > 采用 web工程部署到tomcat服务器的第二种方式，映射到工程文件的web目录下：即编译器拷贝工程（将java文件编译成字节码放进的web文件夹）到realPath路径下
 
       - setAttribute/getAttrobute：实现像map一样存取数据
 
@@ -137,3 +137,165 @@
 - 实现了service方法，实现了请求的分发处理，将对应请求分发到doGet/doPost方法中
   - doGet/doPost方法：只实现异常处理，即处理协议即版本的异常
 
+
+
+### 6. HTTP协议
+
+#### 6.1 请求格式
+
+- 请求行
+  - 请求的方式
+  - 请求的资源路径
+  - 请求的协议和版本号
+- 请求头：键值对
+  - Accept：客户端可以接收的数据类型
+  - Accept-Language：客户端可以接收的语言类型
+    - zh_CN
+    - en_US
+  - Referer（POST：请求发起时，浏览器地址栏的地址
+  - User-Agent：用户代理，即浏览器的信息（替用户发送数据
+  - Content-Type（POST：表示发送数据的类型
+    - application/x-www-form-urlencoded：表示以name=value&name=value形式 提交数据给服务器，然后对其进行url编码（将非因为转换为%xx%xx
+    - multipart/form-data：表示以多段的形式 提交数据给服务器（以流的形式提交，用于上传
+  - Accept-Encoding：客户端可以接受的数据编码/压缩格式
+  - Host：请求的服务器ip和端口号
+  - Content-Length（POST：发送数据的长度
+  - Connection：告诉服务器当前值如果处理
+    - keep-alive：长连接
+    - Close：短连接
+  - Cache-Control：如何控制缓存
+    - no-cache：不缓存
+
+- 空行
+- 实体
+
+
+
+#### 6.2 响应格式
+
+- 状态行
+  - 响应的协议和版本号
+  - 响应状态码
+  - 响应状态描述符
+- 响应头：键值对
+  - Server：服务器的信息
+  - Content-Type：响应体的数据类型
+  - Content-Length：响应体长度
+  - Date：请求响应的时间（格林时间
+- 空行
+- 响应体：回传给客户端的数据
+
+
+
+#### 6.3 MIME类型
+
+MIME是HTTP协议中的数据类型
+
+
+
+### 7. HttpServletRequest
+
+请求进入tomcat服务器时，tomcat将请求过来的http协议信息解析到HttpServletRequest
+
+#### 7.1 方法
+
+<img src="C:\Users\12505\AppData\Roaming\Typora\typora-user-images\image-20210814131249542.png" alt="image-20210814131249542" style="zoom:67%;" /> 
+
+
+
+#### 7.2 请求转发
+
+从一个servlet到另一个servlet，即请求转发
+
+- 请求转发必须以/开头，/表示地址到工程名，映射到工程下面的web目录
+
+- 请求转发过程
+
+  - getRequestDispatcher
+  - forward
+
+  ```java
+  RequestDispatcher requestDispatcher = req.getRequestDispatcher("/servlet2");
+  requestDispatcher.forward(req, resp);
+  ```
+
+- **请求转发特点：**
+
+  - 浏览器地址没有变化
+
+  - 他们是一次请求
+
+  - 共享req中的数据
+
+  - 可以转发到WEB-INF目录下
+
+    > 所有相对路径在工作的时候 都会参照浏览器地址栏中的地址
+
+
+
+### 8. HttpServletResponse
+
+每次请求进来，tomcat都会创建response给servlet使用
+
+#### 8.1 两个输出流
+
+- 字节流：getOutputStream() 常用于下载（传递二进制数据
+- 字符流：getWriter() 常用于回传字符串（常用
+
+同时只能使用一个
+
+
+
+#### 8.2 响应
+
+- 返回字符串：
+
+  ```java
+  //设置服务器字符集为UTF-8
+  resp.setCharacterEncoding("UTF-8");
+  //设置响应头 设置浏览器使用UTF-8字符集
+  resp.setHeader("Content-type", "text/html; charset=UTF-8");
+  
+  //或者直接设置服务器和客户端同时使用，获取流对象之前设置
+  //resp.setContentType("Content-type", "text/html; charset=UTF-8")
+  
+  PrintWriter writer = resp.getWriter();
+  writer.write("response");
+  ```
+
+  
+
+
+
+#### 8.3 请求重定向
+
+请求重定向，是指客户端给服务器发请求，然后服务器给客户端新地址访问（因为之前的地址可能已经被废弃
+
+<img src="C:\Users\12505\AppData\Roaming\Typora\typora-user-images\image-20210814160319825.png" alt="image-20210814160319825" style="zoom:67%;" /> 
+
+
+
+实现：
+
+- 设置重定向：
+
+  ```java
+  //响应状态码
+  resp.setStatus(302);
+  //设置响应头，说明新地址
+  resp.setHeader("Location", "xxx");
+  ```
+
+- 直接重定向跳转
+
+  ```java
+  resp.sendRedirect("xxx");
+  ```
+
+
+
+**特点：**
+
+- 浏览器地址栏会发生变化
+- 是两次请求
+- 不共享数据
