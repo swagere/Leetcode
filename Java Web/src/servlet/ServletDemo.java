@@ -7,6 +7,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 //直接继承servlet实现servlet方法
@@ -63,6 +64,10 @@ public class ServletDemo implements Servlet{
 	private void doGet() {
 		System.out.println("GET");
 		
+	}
+	
+	public void cookieDemo() {
+		Cookie cookie = new Cookie("hello", "Tom");
 	}
 
 }
