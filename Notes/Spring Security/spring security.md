@@ -84,6 +84,8 @@
 
 ### 4. 源码-过滤器链
 
+<img src="../img/image-20210825104622092.png" alt="image-20210825104622092" style="zoom:60%;" /> 
+
 
 
 ### 5. session会话管理
@@ -187,6 +189,7 @@ server.servlet.session.cookie.secure=true
   - expiredSessionStrategy表示自定义一个session被下线(超时)之后的处理策略。
 
 - 实现处理策略类
+
   - 实现SessionInformationExpiredStrategy接口
   - 实现onExpiredSessionDetected方法 
 
@@ -227,6 +230,71 @@ server.servlet.session.cookie.secure=true
       .anyRequest().access("@rabcService.hasPermission(request,authentication)")
   ```
 
+- 实现拦截每一个请求的方法：从动态加载用户角色权限中判断是否能够访问
+
+
+
+### 8. rememberMe功能
+
+#### 8.1 配置
+
+```java
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.rememberMe();   //实现记住我自动登录配置，核心的代码只有这一行
+    }
+}
+```
+
+
+
+#### 8.2 原理
+
+##### 8.2.1 RememberMeToken
+
+cookie中的字段，用来实现记住我功能
+
+- username
+- expiryTime：过期时间
+- signatureValue的Base64加密
+  signatureValue = MD5(username+expirationTime+passwod+一个预定义的key)
+
+
+
+##### 8.2.2 过滤器链
+
+<img src="../img/image-20210825104551320.png" alt="image-20210825104551320" style="zoom:60%;" /> 
+
+
+
+#### 8.3 持久化处理
+
+即把cookie的值在后端存入数据库中 而不是仅在后端内存中
+
+
+
+- 初始化一个PersistentTokenRepository类型的Spring bean，并将系统使用的DataSource注入到该bean中
+
+  ```java
+  @Autowired
+  private DataSource dataSource;
+  
+   @Bean
+   public PersistentTokenRepository persistentTokenRepository(){
+       JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+       tokenRepository.setDataSource(dataSource);
+       return tokenRepository;
+   }
+  ```
+
+- 增加配置
+
+  ```java
+  .rememberMe()
+      .tokenRepository(persistentTokenRepository())
+  ```
+
   
 
-- 实现拦截每一个请求的方法：从动态加载用户角色权限中判断是否能够访问
