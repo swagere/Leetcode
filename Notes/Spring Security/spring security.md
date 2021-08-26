@@ -256,10 +256,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 cookie中的字段，用来实现记住我功能
 
-- username
+- username：用户名
 - expiryTime：过期时间
 - signatureValue的Base64加密
-  signatureValue = MD5(username+expirationTime+passwod+一个预定义的key)
+  signatureValue = MD5(username+expirationTime+password+serise)
 
 
 
