@@ -252,14 +252,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 #### 8.2 原理
 
-##### 8.2.1 RememberMeToken
+##### 8.2.1 组成
 
 cookie中的字段，用来实现记住我功能
 
-- username：用户名
-- expiryTime：过期时间
-- signatureValue的Base64加密
-  signatureValue = MD5(username+expirationTime+password+serise)
+- series
+- RememberMeToken
+  - username：用户名
+  - expiryTime：过期时间
+  - signatureValue的Base64加密
+    signatureValue = MD5(username+expirationTime+password+serise)
 
 
 

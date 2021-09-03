@@ -15,8 +15,9 @@ public class HeapSort {
 	//堆排序
 	//以从小到大为例 使用大顶堆
 	private static void heapSort(int[] nums) {
-		//先进行一轮排序 将整个数组化成有序的大顶堆
+		//先进行一轮排序 将整个数组化成有序的
 		for (int i = nums.length / 2 - 1; i >= 0; i--) {
+			//从第一个非叶子节点开始‘
 			adjustHeap(nums, i, nums.length);
 		}
 		
