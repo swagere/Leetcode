@@ -1,7 +1,7 @@
 package oneDay.leetcode;
 
-//³¬Ê±
-//µÝ¹é 
+//ï¿½ï¿½Ê±
+//ï¿½Ý¹ï¿½ 
 public class l_1137_1 {
 	public static int tribonacci(int n) {
         if (n == 0) {
