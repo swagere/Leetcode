@@ -28,7 +28,7 @@ public class o_10_2 {
 	public static void main(String[] args) {
 		int n = 43;
 		System.out.println(numWays(n));
-
+		
 	}
 
 }
