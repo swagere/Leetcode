@@ -6,7 +6,7 @@ jvm即Java虚拟机
 
 #### 1.1 JVM位置
 
-<img src="../img/image-20210906215118934.png" alt="image-20210906215118934" style="zoom: 67%;" /> 
+<img src="../img/image-20210910204600749.png" alt="image-20210910204600749" style="zoom:50%;" /> 
 
 
 

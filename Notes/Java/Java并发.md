@@ -80,9 +80,9 @@ jvm同步使用管程对象实现
 
 
 
-lock和sychronized对比
+lock和synchronizedList对比
 
-- syschronized是java关键字，自动实现锁
+- synchronizedList是java关键字，自动实现锁
 - lock是一个类，通过这个类手动实现锁
 
 
@@ -98,7 +98,7 @@ lock和sychronized对比
 
 ### 3. 线程间通信
 
-- syschronized
+- synchronizedList
   - wait()方法
     - wait()中可能存在中断后虚假唤醒问题，故应该用while实现条件判断
   - notify()/notifyAll()方法
@@ -109,3 +109,62 @@ lock和sychronized对比
 
 
 ### 4. 线程间定制化通信
+
+- 增加标志位并唤醒特定线程，确定线程间通信顺序
+
+
+
+### 5. 集合的线程安全
+
+ArrayList是线程不安全的
+
+#### 5.1 ArrayList集合
+
+##### 5.1.1 Vector类
+
+层次：
+
+- Object
+  - AbstractCollection
+    - AbstractList
+      - Vector
+
+
+
+add中添加了synchronizedList关键字
+
+
+
+##### 5.1.2 Collections类
+
+- Collections.synchronizedList(new ArrayList());
+
+
+
+##### 5.1.3 CopyOnWriteArrayList类
+
+写时复制技术
+
+- 读时支持并发读
+- 写时要求独立写（用lock上锁）
+  - 写的时候先将原数组复制一份，然后向复制后数组的写入
+  - 写完之后和原数组合并
+
+
+
+#### 5.2 HashSet集合
+
+##### 5.2.1 CopyOnWriteArraySet类
+
+同样使用写时复制技术
+
+
+
+#### 5.3 HashMap集合
+
+#####  5.3.1 ConcurrentHashMap类
+
+
+
+### 6. 多线程锁
+
