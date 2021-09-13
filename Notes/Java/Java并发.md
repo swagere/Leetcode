@@ -137,7 +137,9 @@ add中添加了synchronizedList关键字
 
 ##### 5.1.2 Collections类
 
-- Collections.synchronizedList(new ArrayList());
+- Collections.synchronizedList(new ArrayList())方法，为新创的类加锁
+
+
 
 
 

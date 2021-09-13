@@ -1,5 +1,6 @@
 package oneDay.leetcode;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,6 @@ public class l_447 {
                 sum += n * (n - 1);
             }
         }
-        
         return sum;
     }
 
