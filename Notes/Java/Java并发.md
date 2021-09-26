@@ -224,9 +224,221 @@ synchronized和lock都是可重入锁
 
 
 
+### 7. Callable接口
+
+#### 7.1 创建线程的方式
+
+- 继承Thread类
+
+- 实现Runable接口，重写run()方法
+
+  > 以上方法在线程终止时，即run()完成时，无法使线程返回结果
+
+- 实现Callable接口，重写call()方法
+
+- 线程池
+
+  > 以上方法在jdk1.5以后实现
+
+
+
+#### 7.2 Runable和Callable接口比较
+
+实现方法名称不同：
+
+- call()方法：Callable有返回值，如果无法计算结果则会抛出异常
+- run()方法：Runable没有返回值，且不会抛出异常
+
+
+
+#### 7.3 Callable方式实现线程创建
+
+##### 7.3.1 Thread
+
+Thread()满足：
+
+- new Thread(Thread)
+- new Thread(Runable)
+
+
+
+即Thread()中不能直接加入实现Callable接口的类的实例对象，需要通过FutureTask类中转
+
+FutureTask实现Runable接口，构造方法中传入Callable参数
+
+
+
+##### 7.3.2 FutureTask类
+
+特点：
+
+- 即不影响主线程的事件，为额外事件新开线程
+- get()方法：最终再汇总，且只需要汇总一次
+
+
+
+### 8. JUC的辅助类
+
+#### 8.1 CountDownLatch类
+
+减少计数：
+
+- 构造方法：设置初始值
+- countDown()方法：实现每次减一
+- await()方法：若不等于0则当前线程一直阻塞；当计数器的值为0时，则唤醒当前线程继续执行
+
+
+
+#### 8.2 CyclicBarrier类
+
+循环栅栏：
+
+- 构造方法：设置目标障碍数和Runable接口实现类实例（即固定值到达之后执行的方法）
+- CyclicBarrier
+- await()方法：允许一组线程互相等待，在一组线程（线程数=目标障碍数）中的最后一个线程到达之后执行一次Runable接口实现类实例中的run()方法
+
+
+
+#### 8.3 Semaphore类
+
+计数的信号量：
+
+- 构造方法：许可数
+- accquire()：获取到一个许可，其他线程等待此许可
+- realese()：释放一个许可，被阻塞的线程会被唤醒
+  - 许可==资源信号量
+
+
+
+### 9. ReentrantReadWriteLock读写锁
+
+#### 9.1 乐观锁与悲观锁
+
+- 悲观锁
+  - 每个人操作前加锁，操作后解锁
+  - 能解决并发问题
+  - 不能实现并发，只能一个一个操作进行
+- 乐观锁
+  - 每个人操作前获得版本号，操作后先比较版本号跟数据库版本号是否一致
+    - 如果一致则修改版本号并存到数据库
+    - 如果不一致则提交失败
+  - 支持并发操作
+
+
+
+#### 9.2 表锁与行锁
+
+- 表锁：对整张表上锁
+- 行锁：对某一行上锁
+
+
+
+#### 9.3 读写锁
+
+- ReentrantReadWriteLock.ReadLock().lock()：读锁，共享锁，可能发生死锁
+
+  <img src="../img/image-20210914214705861.png" alt="image-20210914214705861" style="zoom: 67%;" /> 
+
+- ReentrantReadWriteLock.WriteLock().lock()：写锁，独占锁，可能发生死锁
+
+  <img src="../img/image-20210914214926074.png" alt="image-20210914214926074" style="zoom:67%;" /> 
+
+
+
+#### 9.4 读写锁的降级
+
+- 降级：即写锁降级为读锁
+  - 获取写锁-获取读锁-是否写锁-释放读锁
+  - 为了提高数据的可见性
+
+
+
+读锁不能升级为写锁
+
+
+
+### 10. BlockingQueue阻塞队列
+
+
+
+### 11.ThreadPool 线程池
+
+#### 11.1 线程池架构
+
+<img src="../img/image-20210915144538595.png" alt="image-20210915144538595" style="zoom:50%;" /> 
 
 
 
 
 
+#### 11.2 线程池使用方式
 
+**线程池创建：**
+
+- Executors.newFixedThreadPool(int)：
+  - 创建有n个线程的线程池
+  - 线程可以被重复使用
+  - 线程被提交的数量超过n，需在队列中等待
+- Executors.newSingleThreadExecutor()
+  - 创建有一个线程的线程池
+- Executors.newCachedThreadPool()
+  - 线程池根据需求创建线程，可扩容
+
+
+
+**线程使用：**
+
+- .execute(Runable)
+- .shutdown()
+
+
+
+#### 11.3 ThreadPoolExecutor
+
+以上方式的底层原理都是创建了ThreadPoolExecutor类
+
+
+
+##### 11.3.1 ThreadPoolExecutor参数
+
+- corePoolSize：核心线程数/常驻线程数
+
+- maximumPoolSize：最大线程数
+
+- keepAliveTime：值
+
+- TimeUnit：单位
+
+  > 线程存活时间，即线程多长时间不用就直接把线程结束
+
+- workQueue：阻塞队列，存放等待线程的请求
+
+- ThreadFactory：线程工厂，用于创建线程
+
+- RejectedExecutionHandler：拒绝策略
+
+
+
+##### 11.3.2 工作流程
+
+- 主线程执行execute()方法，具体线程被创建
+- 当线程数超过corePool，接下来的请求被放入阻塞队列进行等待
+- 当等待数超过阻塞队列大小时，为新的请求创建线程
+- 当线程数超过maximumPoolSize，会执行handler拒绝策略
+
+<img src="../img/image-20210915151825971.png" alt="image-20210915151825971" style="zoom:67%;" /> 
+
+
+
+##### 11.3.3 拒绝策略
+
+- AbortPolicy：默认策略，直接抛出异常阻止系统正常运行
+- CallerRunsPolicy：调用者模式，该策略既不会抛弃任务也不会抛出异常，而是将某些任务回退到调用者，降低新任务的流量
+- DiscardOldestPolicy：抛弃队列中等待最久的任务，然后把当前任务加人队列中尝试再次提交当前任务
+- DiscardPolicy：丢弃无法处理的任务，不予任何处理也不抛出异常。如果允许任务丢失，这是最好的一种策略
+
+
+
+#### 11.4 自定义线程池
+
+<img src="../img/image-20210915153540057.png" alt="image-20210915153540057" style="zoom: 67%;" /> 
