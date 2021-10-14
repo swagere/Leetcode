@@ -317,7 +317,7 @@ FutureTask实现Runable接口，构造方法中传入Callable参数
 - 悲观锁
   - 每个人操作前加锁，操作后解锁
   - 能解决并发问题
-  - 不能实现并发，只能一个一个操作进行
+  - 不能实现并行，只能一个一个操作进行
 - 乐观锁
   - 每个人操作前获得版本号，操作后先比较版本号跟数据库版本号是否一致
     - 如果一致则修改版本号并存到数据库
@@ -358,6 +358,26 @@ FutureTask实现Runable接口，构造方法中传入Callable参数
 
 
 ### 10. BlockingQueue阻塞队列
+
+#### 10.1 阻塞队列分类
+
+- ArrayBlockingQueue：基于数组的阻塞队列，维护了定长的数组
+- LinkedBlockingQueue：基于链表的阻塞队列，默认大小为Integer.MAX_VALUE
+- DelayQueue：使用优先级实现的延迟的无界阻塞队列（延迟时间到了才能从队列中获取到该元素
+- PrioirityBlockingQueue：支持优先级排序的无界队列
+- SynchronousQueue：单个元素的队列
+- LinkedTransferQueue：由链表组成的无界阻塞队列
+- LinkedBlockingDeque：由链表组成的双向阻塞队列
+
+
+
+#### 11.2 阻塞队列方法
+
+<img src="C:\Users\hujing39\AppData\Roaming\Typora\typora-user-images\image-20211014104336541.png" alt="image-20211014104336541" style="zoom: 67%;" /> 
+
+
+
+#### 11.3 实例
 
 
 
@@ -442,3 +462,106 @@ FutureTask实现Runable接口，构造方法中传入Callable参数
 #### 11.4 自定义线程池
 
 <img src="../img/image-20210915153540057.png" alt="image-20210915153540057" style="zoom: 67%;" /> 
+
+
+
+### 12. Fork/Join分支合并框架
+
+将一个大的任务拆分成多个子任务进行并行处理，最后将子任务结果合并成最后的计算结果,并进行输出
+
+
+
+#### 12.1 框架组成
+
+- 分支合并池
+
+  <img src="C:\Users\hujing39\AppData\Roaming\Typora\typora-user-images\image-20211014112017245.png" alt="image-20211014112017245" style="zoom:50%;" /> 
+
+- 分支合并类
+
+  <img src="C:\Users\hujing39\AppData\Roaming\Typora\typora-user-images\image-20211014112115001.png" alt="image-20211014112115001" style="zoom:50%;" /> 
+
+
+
+#### 12.2 实例
+
+```java
+//Fork/Join分支合并框架
+public class forkJoinDemo {
+
+	public static void main(String[] args) throws Exception, Exception {
+		MyTask task = new MyTask(1, 100);
+		//创建分支合并池对象
+		ForkJoinPool forkJoinPool = new ForkJoinPool();
+		ForkJoinTask<Integer> forkJoinTask = forkJoinPool.submit(task);
+		Integer res = forkJoinTask.get();
+		System.out.println(res);
+		//关闭池对象
+		forkJoinPool.shutdown();
+	}
+
+}
+
+class MyTask extends RecursiveTask<Integer> {
+	private static final int VALUE = 10;
+	private int begin;
+	private int end;
+	private int result;
+	
+	public MyTask(int begin, int end) {
+		this.begin = begin;
+		this.end = end;
+		this.result = 0;
+	}
+
+	@Override
+	protected Integer compute() {
+		if (end - begin <= VALUE) {
+			for (int i = begin; i <= end; i++) {
+				result += i;
+			}
+		}
+		else {
+			int mid = (this.begin + this.end) / 2;
+			MyTask task1 = new MyTask(begin, mid);
+			MyTask task2 = new MyTask(mid + 1, end);
+			task1.fork();
+			task2.fork();
+			result = task1.join() + task2.join();
+		}
+		return result;
+	}
+	
+}
+```
+
+
+
+### 13. CompletableFuture异步回调
+
+<img src="C:\Users\hujing39\AppData\Roaming\Typora\typora-user-images\image-20211014160652072.png" alt="image-20211014160652072" style="zoom: 67%;" />  
+
+实例：
+
+```java
+public static void main(String[] args) throws InterruptedException, ExecutionException {
+		//没有返回值
+		CompletableFuture<Void> completableFuture1 = CompletableFuture.runAsync(()->{
+			System.out.println("hello");
+		});
+		
+		completableFuture1.get();
+		
+		//有返回值
+		CompletableFuture<Integer> completableFuture2 = CompletableFuture.supplyAsync(()->{
+			System.out.println("hi");
+			return 1;
+		});
+		
+		completableFuture2.whenComplete((u,t)-> {
+			System.out.println(u);
+			System.out.println(t);
+		}).get();
+	}
+```
+
