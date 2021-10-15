@@ -1,5 +1,7 @@
 package oneDay.offer;
 
+//r
+//¶þ·Ö·¨
 public class o_69 {
 	public static int peakIndexInMountainArray(int[] arr) {
         int i = 1;
