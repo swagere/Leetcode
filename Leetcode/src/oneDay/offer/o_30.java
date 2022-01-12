@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+//两个大小相等的栈
 public class o_30 {
 	public static void main(String[] args) {
 		MinStack minStack = new MinStack();
