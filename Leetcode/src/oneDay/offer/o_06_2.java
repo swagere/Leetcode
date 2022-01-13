@@ -1,9 +1,7 @@
 package oneDay.offer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 
 //ตÝน้
 public class o_06_2 {
@@ -14,7 +12,7 @@ public class o_06_2 {
 
 }
 
-class Solution {
+class Solution062 {
 	List<Integer> list = new ArrayList<>();
     public int[] reversePrint(ListNode head) {
        recur(head);

@@ -12,7 +12,7 @@ public class o_06_1 {
 
 }
 
-class Solution1 {
+class Solution061 {
     public int[] reversePrint(ListNode head) {
         Stack<Integer> stack = new Stack<>();
         ListNode temp = head;
