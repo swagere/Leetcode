@@ -1,6 +1,6 @@
 package oneDay.offer;
 
-public class o_53 {
+public class o_53_¢ñ {
 
 	public static void main(String[] args) {
 		int[] nums = {1};
