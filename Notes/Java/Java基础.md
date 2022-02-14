@@ -243,10 +243,32 @@ this不能省略：
   - 代码复用
   - 延续出方法覆盖与多态
 - 只支持单继承（c++中支持多继承
+  - 单继承：一个子类只能有一个父类，但是一个父类有可以有多个子类
 - 可以继承父类的除私有、构造方法外的其他部分
 
 
 
+重写：
+
+- 有继承关系的才能重写
+- 子类访问权限只能等于或更高
+- 子类抛出异常只能等于或更多
+- 私有和构造方法不能重写，静态方法不存在重写
 
 
-### xx. 面向对象特征-多态
+
+### 6. 面向对象特征-多态
+
+- 向上转型：自动类型转换
+
+  - Animal a = new Cat();
+
+    <img src="C:\Users\hujing39\AppData\Roaming\Typora\typora-user-images\image-20220210114224107.png" alt="image-20220210114224107" style="zoom:67%;" /> 
+
+- 向下转型：强制类型转换
+
+  - Cat c = new Animal();
+
+    c = Cat(c);
+
+  - 易出现**类型转换异常**：java.lang.ClassCastException，可用instanceof运算符避免
