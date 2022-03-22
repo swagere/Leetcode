@@ -1,17 +1,17 @@
 package oneDay.offer;
 
-public class o_58 {
+public class o_58_¢ò {
 
 	public static void main(String[] args) {
 		String s = "abcdefg";
 		int k = 2;
-		Solution581 so = new Solution581();
+		Solution5821 so = new Solution5821();
 		System.out.println(so.reverseLeftWords(s, k));
 	}
 
 }
 
-class Solution581 {
+class Solution5821 {
     public String reverseLeftWords(String s, int n) {
     	if (s.length() <= 1) {
     		return s;
