@@ -19,13 +19,16 @@ public class o_26 {
 	}
 }
 
+//µÝ¹é½â¾ö
 class Solution261 {
 	TreeNode aim;
+	boolean r = false;
     public boolean isSubStructure(TreeNode A, TreeNode B) {
     	if (A == null || B == null) {
     		return false;
     	}
     	aim = B;
+    	
     	return compare(A, B);
     }
     
@@ -41,11 +44,13 @@ class Solution261 {
     	boolean res = false;
     	if (a.val == b.val) {
     		res = compare(a.left, b.left);
-    		if (res) res = compare(a.right, b.right);
+    		if (!r && res) res = compare(a.right, b.right);
+    		
     	}
     	else {
     		res = compare(a.left, aim);
     		if (!res) res = compare(a.right, aim);
+    		if (res) r = true;
     	}
     	return res;
     }
