@@ -22,7 +22,7 @@
 两个阶段：
 
 - 编译：javac.exe
-  - 将.java文件编译为.class 字节码文件，检查源文件是否符合Java语法5
+  - 将.java文件编译为.class 字节码文件，检查源文件是否符合Java语法
 - 运行：java.exe
   - 类装载器ClassLoader
     - 在硬盘上寻找对应的类文件（即字节码文件，再装载到JVM中
@@ -272,3 +272,27 @@ this不能省略：
     c = Cat(c);
 
   - 易出现**类型转换异常**：java.lang.ClassCastException，可用instanceof运算符避免
+
+
+
+### 7. final关键字
+
+- 修饰类，无法被继承
+- 修饰方法，无法被覆盖/重写
+- 修饰变量，赋值后不可更改
+  - 修饰实例变量时，必须在定义时手动赋值或在构造方法中赋值
+    - 成员变量有默认值
+    - final修饰的变量值不可更改
+  - 修饰引用，字面值不能改变，引用指向的对象本身可以改变
+
+
+
+public static final联合使用，称作常量
+
+
+
+### 8. package和import
+
+- import的必要：
+  - 对一个执行类来说，其能够自动识别的类为package路径下的类，其余类需要import或者写package绝对路径
+  - java.lang.* 由系统自动引入，不需要手动引入
